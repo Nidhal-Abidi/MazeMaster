@@ -1,0 +1,208 @@
+@import url("https://fonts.googleapis.com/css?family=Lato");
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: lato, arial;
+}
+
+:root {
+  /*Nav & body color palette*/
+  --nav-clr: hsl(205, 32%, 30%);
+  --nav-btn-clr: hsl(218, 21%, 21%);
+  --nav-btn-border-clr: hsl(218, 21%, 11%);
+
+  --nav-btn-accent-clr: hsl(22, 99%, 63%);
+  --nav-btn-accent-border-clr: hsl(22, 99%, 43%);
+
+  --body-clr: hsl(205, 23%, 41%);
+  /* Grid color palette*/
+  --default-cell-clr: hsl(40, 12%, 71%);
+  --cell-checking-clr: hsl(204, 76%, 61%);
+  --visited-cell-clr: hsl(0, 0%, 39%);
+  --wall-cell-clr: hsl(0, 0%, 21%);
+  --starting-cell-clr: hsl(161, 82%, 24%);
+  --ending-cell-clr: hsl(355, 100%, 38%);
+
+  /* Cell width*/
+  --cell-width-large: 90px;
+  --cell-width-small: 60px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  position: sticky;
+  z-index: 2;
+  top: 0px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  background-color: var(--nav-clr);
+  padding-left: 1.5rem;
+}
+
+.btn,
+.algos-container {
+  background-color: var(--nav-btn-clr);
+  border: 1px solid var(--nav-btn-border-clr);
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.25em 0.75em;
+  border-radius: 0.5rem;
+  margin: 1rem 0.5rem 1rem 0;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.btn:hover,
+.btn:focus {
+  background-color: var(--nav-btn-border-clr);
+  box-shadow: 0 0 8px 0 var(--nav-btn-border-clr);
+}
+
+.btn:disabled {
+  background-color: dimgrey;
+  box-shadow: none;
+  cursor: not-allowed;
+  border: 1px solid dimgrey;
+}
+
+.btn-accent {
+  background-color: var(--nav-btn-accent-clr);
+  border-color: var(--nav-btn-accent-border-clr);
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+  background-color: var(--nav-btn-accent-border-clr);
+  box-shadow: 0 0 8px 0 var(--nav-btn-accent-border-clr);
+}
+
+/*Main content CSS*/
+
+.main {
+  background-color: var(--body-clr);
+  flex-grow: 1;
+  display: flex;
+  justify-content: space-between;
+}
+
+.grid-node {
+  background-color: rebeccapurple;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.cells-container {
+  background-color: bisque;
+  padding: 2rem;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  gap: 2px;
+  overflow-x: auto;
+  min-height: 95%;
+  min-width: 90%;
+}
+
+.cells-container-small-nodes {
+  grid-template-columns: repeat(auto-fill, var(--cell-width-small));
+}
+
+.cells-container-large-nodes {
+  grid-template-columns: repeat(auto-fill, var(--cell-width-large));
+}
+
+.node {
+  background-color: aliceblue;
+  border: 1px solid grey;
+  display: inline-block;
+  margin: 0;
+}
+
+.node-small {
+  height: var(--cell-width-small);
+  width: var(--cell-width-small);
+}
+
+.node-large {
+  height: var(--cell-width-large);
+  width: var(--cell-width-large);
+}
+
+.side-bar {
+  background-color: blueviolet;
+}
+
+/*Cell Size toggle css (src before modification: https://www.w3schools.com/howto/howto_css_switch.asp)*/
+.switch {
+  position: relative;
+  z-index: 1;
+  display: inline-block;
+  width: 36px;
+  height: 10px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  left: 0px;
+  bottom: 0px;
+  background-color: white;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+input:checked + .slider {
+  background-color: #2196f3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 10px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
+/*End of cell size toggle CSS*/
