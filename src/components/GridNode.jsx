@@ -30,15 +30,39 @@ export function GridNode() {
   }, [])
 
   function createGrid(rows, columns) {
+    let randStartNode = {
+      row: getRandomInt(0, rows),
+      col: getRandomInt(0, Math.floor(columns / 2)),
+    }
+    let randEndNode = {
+      row: getRandomInt(0, rows),
+      col: getRandomInt(Math.floor(columns / 2), columns),
+    }
     let arr = []
     for (let i = 0; i < rows; i++) {
       let currentRow = []
       for (let j = 0; j < columns; j++) {
-        currentRow.push([])
+        let node = createNode(i, j, randStartNode, randEndNode)
+        currentRow.push(node)
       }
       arr.push(currentRow)
     }
     return arr
+  }
+
+  function createNode(row, col, randStartNode, randEndNode) {
+    return {
+      row: row,
+      col: col,
+      isStartNode: row == randStartNode.row && col == randStartNode.col,
+      isEndNode: row == randEndNode.row && col == randEndNode.col,
+      isWall: false,
+    }
+  }
+
+  function getRandomInt(min, max) {
+    //Should return an integer between [0,max-1]
+    return Math.floor(Math.random() * (max - min) + min)
   }
 
   return (
@@ -66,10 +90,19 @@ export function GridNode() {
         }`}
         ref={cellsContainerRef}
       >
-        {arrGrid.map((row, idx) => {
-          return row.map((cell, cellIdx) => {
-            let nodeType = cellSide == 90 ? "node-large" : "node-small"
-            return <Node key={cellIdx} nodeType={nodeType} />
+        {arrGrid.map((row, rowIdx) => {
+          return row.map((cell, colIdx) => {
+            let nodeSize = cellSide == 90 ? "node-large" : "node-small"
+            /* if (rowIdx == 0 && colIdx == 0) {
+              return <Node key={colIdx} nodeType={nodeType + " start-node"} />
+            }
+            if (
+              rowIdx == arrGrid.length - 1 &&
+              colIdx == arrGrid[0].length - 1
+            ) {
+              return <Node key={colIdx} nodeType={nodeType + " end-node"} />
+            } */
+            return <Node key={colIdx} nodeSize={nodeSize} node={cell} />
           })
         })}
       </div>
