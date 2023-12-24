@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export function NavBar() {
+export function NavBar({ visualizeDijkstra }) {
   const [selectedAlgo, setSelectedAlgo] = useState("dfs")
   return (
     <header className="header">
@@ -15,7 +15,19 @@ export function NavBar() {
         <option value="a-star">A*</option>
       </select>
 
-      <button className="btn">Visualize {selectedAlgo}!</button>
+      <button
+        className="btn"
+        onClick={() => {
+          if (selectedAlgo == "dijsktra") {
+            visualizeDijkstra()
+          } else {
+            console.log("Algorithm is still in progress")
+          }
+        }}
+      >
+        Visualize {selectedAlgo}!
+      </button>
+
       <button className="btn">Generate Maze</button>
       <button className="btn btn-accent">My Path{"'"}s Score</button>
     </header>

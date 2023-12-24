@@ -3,5 +3,10 @@ export function Node({ nodeSize, node }) {
 
   let nodeType = isStartNode ? "start-node" : isEndNode ? "end-node" : ""
 
-  return <div className={`node ${nodeSize} ${nodeType}`}></div>
+  return (
+    <div
+      className={`node ${nodeSize} ${nodeType}`}
+      id={`node-${row}-${col}`}
+    ></div>
+  )
 }

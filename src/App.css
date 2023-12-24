@@ -1,9 +1,9 @@
-@import url("https://fonts.googleapis.com/css?family=Lato");
+@import url("https://fonts.googleapis.com/css2?family=Rubik+Doodle+Shadow&family=Space+Grotesk:wght@400;700&display=swap");
 
 * {
   box-sizing: border-box;
   margin: 0;
-  font-family: lato, arial;
+  font-family: "space grotesk", arial;
 }
 
 :root {
@@ -20,6 +20,7 @@
   --default-cell-clr: hsl(40, 12%, 71%);
   --cell-checking-clr: hsl(204, 76%, 61%);
   --visited-cell-clr: hsl(0, 0%, 39%);
+  --final-path-cell-clr: hsl(47, 100%, 67%);
   --wall-cell-clr: hsl(0, 0%, 21%);
   --starting-cell-clr: hsl(161, 82%, 24%);
   --ending-cell-clr: hsl(355, 100%, 38%);
@@ -134,6 +135,129 @@
 
 .end-node {
   background-color: var(--ending-cell-clr);
+}
+
+.visited-node {
+  background-color: var(--visited-cell-clr);
+  animation: visited-node-animation 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes visited-node-animation {
+  0% {
+    animation-timing-function: ease-out;
+    transform: scale(1);
+    transform-origin: center center;
+    background-color: hsl(204, 76%, 61%);
+  }
+
+  10% {
+    animation-timing-function: ease-in;
+    transform: scale(0.91);
+  }
+
+  17% {
+    animation-timing-function: ease-out;
+    transform: scale(0.98);
+  }
+
+  33% {
+    animation-timing-function: ease-in;
+    transform: scale(0.87);
+  }
+
+  45% {
+    animation-timing-function: ease-out;
+    transform: scale(1);
+  }
+}
+
+.final-path-node {
+  background-color: var(--final-path-cell-clr);
+  animation: final-path-animation 1s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes final-path-animation {
+  0% {
+    transform: translate(0);
+  }
+
+  10% {
+    transform: translate(-2px, -2px);
+  }
+
+  20% {
+    transform: translate(2px, -2px);
+  }
+
+  30% {
+    transform: translate(-2px, 2px);
+  }
+
+  40% {
+    transform: translate(2px, 2px);
+  }
+
+  50% {
+    transform: translate(-2px, -2px);
+  }
+
+  60% {
+    transform: translate(2px, -2px);
+  }
+
+  70% {
+    transform: translate(-2px, 2px);
+  }
+
+  80% {
+    transform: translate(-2px, -2px);
+  }
+
+  90% {
+    transform: translate(2px, -2px);
+  }
+
+  100% {
+    transform: translate(0);
+  }
+}
+
+@keyframes adding-walls-animation {
+  0%,
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    background-color: var(--final-path-cell-clr);
+  }
+
+  10% {
+    transform: rotate(8deg);
+    background-color: hsl(47, 100%, 77%);
+  }
+
+  20%,
+  40%,
+  60% {
+    transform: rotate(-10deg);
+    background-color: hsl(47, 100%, 77%);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: rotate(10deg);
+    background-color: hsl(47, 100%, 77%);
+  }
+
+  80% {
+    transform: rotate(-8deg);
+  }
+
+  90% {
+    transform: rotate(8deg);
+  }
 }
 
 .node-small {
