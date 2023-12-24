@@ -272,6 +272,7 @@
 
 .side-bar {
   border-left: 1px solid var(--nav-clr);
+  max-width: 15rem;
 }
 
 /*Cell Size toggle css (src before modification: https://www.w3schools.com/howto/howto_css_switch.asp)*/
@@ -336,3 +337,40 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 /*End of cell size toggle CSS*/
+
+/*Sidebar CSS*/
+.side-bar .header {
+  color: white;
+  background-color: var(--body-clr);
+  padding: 1em 1em 1em 0;
+}
+
+.side-bar .instruction-item {
+  color: hsl(40, 12%, 81%);
+  font-size: 1.1rem;
+  font-weight: bold;
+  line-height: 2rem;
+}
+
+.path-score {
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 0.5rem;
+}
+
+.path-score h3 {
+  color: hsl(40, 12%, 81%);
+  padding-left: 0.5em;
+}
+
+.path-score input {
+  width: 3rem;
+  margin-right: 0.5em;
+  border-radius: 0.3em;
+  background-color: #ccc;
+  border: 1px solid black;
+  font-size: 1rem;
+  text-align: center;
+  font-weight: bold;
+  font-style: italic;
+}

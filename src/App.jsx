@@ -9,6 +9,8 @@ function App() {
   const [arrGrid, setArrGrid] = useState([])
   const startNode = useRef({})
   const endNode = useRef({})
+  const userScore = useRef(0)
+  const [algoScore, setAlgoScore] = useState(0)
 
   const visualizeDijkstra = () => {
     let visitedNodesInOrder = dijkstra(
@@ -48,11 +50,14 @@ function App() {
   const animateShortestPath = (shortestPathNodes) => {
     for (let i = 0; i < shortestPathNodes.length; i++) {
       let node = shortestPathNodes[i]
+
       if (node.isStartNode || node.isEndNode) continue
+
       setTimeout(() => {
         document
           .querySelector(`#node-${node.row}-${node.col}`)
           .classList.add("final-path-node")
+        setAlgoScore((prevSc) => prevSc + 1)
       }, 200 * i)
     }
   }
@@ -67,7 +72,7 @@ function App() {
           startNode={startNode}
           endNode={endNode}
         />
-        <SideBar />
+        <SideBar algoScore={algoScore} />
       </main>
     </>
   )
