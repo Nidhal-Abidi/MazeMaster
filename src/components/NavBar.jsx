@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-export function NavBar({ visualizeDijkstra }) {
+export function NavBar({ visualizeDijkstra, setAlgoScore }) {
   const [selectedAlgo, setSelectedAlgo] = useState("dfs")
   return (
     <header className="header">
@@ -18,6 +18,7 @@ export function NavBar({ visualizeDijkstra }) {
       <button
         className="btn"
         onClick={() => {
+          setAlgoScore(0)
           if (selectedAlgo == "dijsktra") {
             visualizeDijkstra()
           } else {

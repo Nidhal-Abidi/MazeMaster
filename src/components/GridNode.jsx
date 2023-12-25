@@ -5,7 +5,6 @@ import { GridSizeSwitch } from "./GridSizeSwitch"
 export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
   const [cellSide, setCellSide] = useState(60)
   const [gridDim, setGridDim] = useState([500, 500])
-
   const cellsContainerRef = useRef()
 
   useEffect(() => {
@@ -85,7 +84,15 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
         {arrGrid.map((row, rowIdx) => {
           return row.map((cell, colIdx) => {
             let nodeSize = cellSide == 90 ? "node-large" : "node-small"
-            return <Node key={colIdx} nodeSize={nodeSize} node={cell} />
+            return (
+              <Node
+                key={colIdx}
+                nodeSize={nodeSize}
+                node={cell}
+                arrGrid={arrGrid}
+                setArrGrid={setArrGrid}
+              />
+            )
           })
         })}
       </div>

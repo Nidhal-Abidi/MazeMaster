@@ -224,6 +224,10 @@
   }
 }
 
+.wall-node {
+  background-color: var(--wall-cell-clr);
+}
+
 @keyframes adding-walls-animation {
   0%,
   100% {

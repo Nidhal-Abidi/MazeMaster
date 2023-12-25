@@ -18,10 +18,10 @@ function App() {
       startNode.current,
       endNode.current
     )
+    console.log("All visited Nodes->", visitedNodesInOrder)
     let shortestPathNodes = getNodesInShortestPathOrder(
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
-    console.log("All visited Nodes->", visitedNodesInOrder)
     console.log("Shortest path->", shortestPathNodes)
 
     animateDijkstra(visitedNodesInOrder, shortestPathNodes)
@@ -48,6 +48,8 @@ function App() {
   }
 
   const animateShortestPath = (shortestPathNodes) => {
+    let lastNode = shortestPathNodes[shortestPathNodes.length - 1]
+    if (!lastNode.isEndNode) return
     for (let i = 0; i < shortestPathNodes.length; i++) {
       let node = shortestPathNodes[i]
 
@@ -64,7 +66,10 @@ function App() {
 
   return (
     <>
-      <NavBar visualizeDijkstra={visualizeDijkstra} />
+      <NavBar
+        visualizeDijkstra={visualizeDijkstra}
+        setAlgoScore={setAlgoScore}
+      />
       <main className="main">
         <GridNode
           arrGrid={arrGrid}
