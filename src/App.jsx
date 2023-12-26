@@ -4,13 +4,20 @@ import { GridNode } from "./components/GridNode"
 import { NavBar } from "./components/NavBar"
 import { SideBar } from "./components/SideBar"
 import { dijkstra, getNodesInShortestPathOrder } from "./algorithms/dijkstra"
+import { dfs } from "./algorithms/dfs"
 
 function App() {
   const [arrGrid, setArrGrid] = useState([])
-  const startNode = useRef({})
-  const endNode = useRef({})
+  const startNode = useRef({ row: -1, col: -1 })
+  const endNode = useRef({ row: -1, col: -1 })
   const userScore = useRef(0)
   const [algoScore, setAlgoScore] = useState(0)
+
+  const visualizeDFS = () => {
+    let visitedNodesInOrder = dfs(arrGrid, startNode.current)
+    console.log("All visited Nodes->", visitedNodesInOrder)
+    animateDijkstra(visitedNodesInOrder, visitedNodesInOrder)
+  }
 
   const visualizeDijkstra = () => {
     let visitedNodesInOrder = dijkstra(
@@ -33,16 +40,19 @@ function App() {
       if (i == visitedNodesInOrder.length) {
         setTimeout(() => {
           animateShortestPath(shortestPathNodes)
-        }, 100 * i)
+        }, 50 * i)
       } else {
         // Animate the visited nodes first.
         let node = visitedNodesInOrder[i]
         if (node.isStartNode || node.isEndNode) continue
         setTimeout(() => {
-          document
-            .querySelector(`#node-${node.row}-${node.col}`)
-            .classList.add("visited-node")
-        }, 100 * i)
+          let cell = document.querySelector(`#node-${node.row}-${node.col}`)
+          cell.classList.add("visited-node")
+          cell.classList.add("visited-node-animation")
+          setTimeout(() => {
+            cell.classList.remove("visited-node-animation")
+          }, 1000)
+        }, 50 * i)
       }
     }
   }
@@ -56,11 +66,14 @@ function App() {
       if (node.isStartNode || node.isEndNode) continue
 
       setTimeout(() => {
-        document
-          .querySelector(`#node-${node.row}-${node.col}`)
-          .classList.add("final-path-node")
+        let cell = document.querySelector(`#node-${node.row}-${node.col}`)
+        cell.classList.add("final-path-node")
+        cell.classList.add("final-path-animation")
+        setTimeout(() => {
+          cell.classList.remove("final-path-animation")
+        }, 1000)
         setAlgoScore((prevSc) => prevSc + 1)
-      }, 200 * i)
+      }, 100 * i)
     }
   }
 
@@ -68,6 +81,7 @@ function App() {
     <>
       <NavBar
         visualizeDijkstra={visualizeDijkstra}
+        visualizeDFS={visualizeDFS}
         setAlgoScore={setAlgoScore}
       />
       <main className="main">

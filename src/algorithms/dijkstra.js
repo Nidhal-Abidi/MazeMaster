@@ -2,7 +2,6 @@
 
 export function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = []
-  //startNode.distance = 0
   // getAllNodes transforms the array into 1 dimension + sets the distance(start node)=0
   const unvisitedNodes = getAllNodes(grid, startNode.row, startNode.col)
 
