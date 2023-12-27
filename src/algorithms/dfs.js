@@ -1,7 +1,6 @@
 export function dfs(grid, startNode) {
   let startNodeDetails = grid[startNode.row][startNode.col]
-  const stack = []
-  stack.push(startNodeDetails)
+  const stack = [startNodeDetails]
   const visitedNodesInOrder = []
   while (stack.length !== 0) {
     const vertex = stack.pop()

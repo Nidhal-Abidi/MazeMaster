@@ -38,7 +38,7 @@ function updateUnvisitedNeighbors(node, grid) {
 function getUnvisitedNeighbors(node, grid) {
   const neighbors = []
   const { col, row } = node
-  // Neighbours are located at: top, right, bottom, left.
+  // Neighbours are located at: top, bottom, left, right.
   if (row > 0) neighbors.push(grid[row - 1][col])
   if (row < grid.length - 1) neighbors.push(grid[row + 1][col])
   if (col > 0) neighbors.push(grid[row][col - 1])
@@ -60,11 +60,7 @@ function getAllNodes(grid, row, col) {
       }
     }
   }
-  /* for (const row of grid) {
-    for (const node of row) {
-      nodes.push(node)
-    }
-  } */
+
   return nodes
 }
 

@@ -1,6 +1,11 @@
 import { useState } from "react"
 
-export function NavBar({ visualizeDijkstra, visualizeDFS, setAlgoScore }) {
+export function NavBar({
+  visualizeDijkstra,
+  visualizeDFS,
+  visualizeBFS,
+  setAlgoScore,
+}) {
   const [selectedAlgo, setSelectedAlgo] = useState("dfs")
   return (
     <header className="header">
@@ -23,6 +28,8 @@ export function NavBar({ visualizeDijkstra, visualizeDFS, setAlgoScore }) {
             visualizeDijkstra()
           } else if (selectedAlgo == "dfs") {
             visualizeDFS()
+          } else if (selectedAlgo == "bfs") {
+            visualizeBFS()
           } else {
             console.log("Algorithm is still in progress")
           }
