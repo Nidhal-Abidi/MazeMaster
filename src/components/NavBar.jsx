@@ -4,9 +4,13 @@ export function NavBar({
   visualizeDijkstra,
   visualizeDFS,
   visualizeBFS,
+  visualizeA_star,
   setAlgoScore,
+  clearFinalPath,
+  clearWalls,
 }) {
   const [selectedAlgo, setSelectedAlgo] = useState("dfs")
+
   return (
     <header className="header">
       <select
@@ -30,6 +34,8 @@ export function NavBar({
             visualizeDFS()
           } else if (selectedAlgo == "bfs") {
             visualizeBFS()
+          } else if (selectedAlgo == "a-star") {
+            visualizeA_star()
           } else {
             console.log("Algorithm is still in progress")
           }
@@ -39,6 +45,12 @@ export function NavBar({
       </button>
 
       <button className="btn">Generate Maze</button>
+      <button className="btn" onClick={clearFinalPath}>
+        Clear Final Path
+      </button>
+      <button className="btn" onClick={clearWalls}>
+        Clear Walls
+      </button>
       <button className="btn btn-accent">My Path{"'"}s Score</button>
     </header>
   )

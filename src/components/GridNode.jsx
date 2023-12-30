@@ -8,6 +8,29 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
   const cellsContainerRef = useRef()
 
   useEffect(() => {
+    const createGrid = (rows, columns) => {
+      let startNodeTopLeft = {
+        row: 0, //getRandomInt(0, rows),
+        col: 0, //getRandomInt(0, Math.floor(columns / 2)),
+      }
+      let endNodeBottomRight = {
+        row: rows - 1, //getRandomInt(0, rows),
+        col: columns - 1, //getRandomInt(Math.floor(columns / 2), columns),
+      }
+      startNode.current = startNodeTopLeft
+      endNode.current = endNodeBottomRight
+      let arr = []
+      for (let i = 0; i < rows; i++) {
+        let currentRow = []
+        for (let j = 0; j < columns; j++) {
+          let node = createNode(i, j, startNodeTopLeft, endNodeBottomRight)
+          currentRow.push(node)
+        }
+        arr.push(currentRow)
+      }
+      return arr
+    }
+
     let gridGap = 2
     /* Approximate calculation of the nbr of rows/columns that fit the width/height of any screen */
     let rows = Math.floor((gridDim[0] + gridGap) / (cellSide + gridGap)) - 2
@@ -18,7 +41,7 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
     }
 
     setArrGrid(createGrid(rows, cols))
-  }, [cellSide, gridDim])
+  }, [cellSide, gridDim, setArrGrid, endNode, startNode])
 
   useEffect(() => {
     const height = cellsContainerRef.current.offsetHeight
@@ -26,29 +49,6 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
     //console.log("Setting the height & width:(", height, ",", width, ")")
     setGridDim([height, width])
   }, [])
-
-  function createGrid(rows, columns) {
-    let randStartNode = {
-      row: getRandomInt(0, rows),
-      col: getRandomInt(0, Math.floor(columns / 2)),
-    }
-    let randEndNode = {
-      row: getRandomInt(0, rows),
-      col: getRandomInt(Math.floor(columns / 2), columns),
-    }
-    startNode.current = randStartNode
-    endNode.current = randEndNode
-    let arr = []
-    for (let i = 0; i < rows; i++) {
-      let currentRow = []
-      for (let j = 0; j < columns; j++) {
-        let node = createNode(i, j, randStartNode, randEndNode)
-        currentRow.push(node)
-      }
-      arr.push(currentRow)
-    }
-    return arr
-  }
 
   function createNode(row, col, randStartNode, randEndNode) {
     return {
@@ -81,7 +81,7 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
         }`}
         ref={cellsContainerRef}
       >
-        {arrGrid.map((row, rowIdx) => {
+        {arrGrid.map((row) => {
           return row.map((cell, colIdx) => {
             let nodeSize = cellSide == 90 ? "node-large" : "node-small"
             return (
