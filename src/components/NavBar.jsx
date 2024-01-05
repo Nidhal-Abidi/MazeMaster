@@ -8,8 +8,9 @@ export function NavBar({
   setAlgoScore,
   clearFinalPath,
   clearWalls,
+  generateMaze,
 }) {
-  const [selectedAlgo, setSelectedAlgo] = useState("dfs")
+  const [selectedAlgo, setSelectedAlgo] = useState("dijsktra")
 
   return (
     <header className="header">
@@ -18,14 +19,14 @@ export function NavBar({
         value={selectedAlgo}
         onChange={(e) => setSelectedAlgo(e.target.value)}
       >
+        <option value="dijsktra">Dijkstra</option>
         <option value="dfs">Depth-First Search</option>
         <option value="bfs">Breadth-First Search</option>
-        <option value="dijsktra">Dijkstra</option>
         <option value="a-star">A*</option>
       </select>
 
       <button
-        className="btn"
+        className="btn btn-accent"
         onClick={() => {
           setAlgoScore(0)
           if (selectedAlgo == "dijsktra") {
@@ -44,14 +45,15 @@ export function NavBar({
         Visualize {selectedAlgo}!
       </button>
 
-      <button className="btn">Generate Maze</button>
+      <button className="btn" onClick={generateMaze}>
+        Generate Maze
+      </button>
       <button className="btn" onClick={clearFinalPath}>
         Clear Final Path
       </button>
       <button className="btn" onClick={clearWalls}>
         Clear Walls
       </button>
-      <button className="btn btn-accent">My Path{"'"}s Score</button>
     </header>
   )
 }

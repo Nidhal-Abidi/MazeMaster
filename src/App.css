@@ -80,6 +80,11 @@
   border-color: var(--nav-btn-accent-border-clr);
 }
 
+.btn-small {
+  font-size: 1rem;
+  margin-left: 2rem;
+}
+
 .btn-accent:hover,
 .btn-accent:focus {
   background-color: var(--nav-btn-accent-border-clr);
@@ -378,6 +383,10 @@ input:checked + .slider:before {
   border-radius: 50%;
 }
 /*End of cell size toggle CSS*/
+
+.side-bar {
+  z-index: 1;
+}
 
 /*Sidebar CSS*/
 .side-bar .header {

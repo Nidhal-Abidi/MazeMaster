@@ -11,6 +11,7 @@ export function a_star(grid, startNode, endNode) {
   let visitedNodesInOrder = []
 
   while (openSet.length > 0) {
+    console.log(openSet)
     // Search for the next node to explore (i.e. the one wit the lowest value of 'f')
     let lowestFscoreNodeIdx = getLowestFScoreNodeIdx(openSet)
     let currentNode = openSet[lowestFscoreNodeIdx]
@@ -67,13 +68,13 @@ function manhattanDistance(nodeA, nodeB) {
 
   let prevCost =
     Math.abs(nodeA.col - nodeB.col) + Math.abs(nodeA.row - nodeB.row)
-  let nudge = 0
+  /* let nudge = 0
   if ((nodeA.row + nodeA.col) % 2 == 0 && nodeB.row != nodeA.row) {
     nudge = 1
   }
   if ((nodeA.row + nodeA.col) % 2 == 1 && nodeB.col != nodeA.col) {
     nudge = 1
-  }
+  } */
   return prevCost
 }
 

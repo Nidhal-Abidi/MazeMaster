@@ -1,13 +1,17 @@
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import "./App.css"
 import { GridNode } from "./components/GridNode"
 import { NavBar } from "./components/NavBar"
 import { SideBar } from "./components/SideBar"
-import { dijkstra, getNodesInShortestPathOrder } from "./algorithms/dijkstra"
-import { dfs } from "./algorithms/dfs"
-import { bfs } from "./algorithms/bfs"
+import {
+  dijkstra,
+  getNodesInShortestPathOrder,
+} from "./algorithms/pathfinding/dijkstra"
+import { dfs } from "./algorithms/pathfinding/dfs"
+import { bfs } from "./algorithms/pathfinding/bfs"
 import { animateAlgorithm } from "./animations"
-import { a_star } from "./algorithms/a-star"
+import { a_star } from "./algorithms/pathfinding/a-star"
+import { random_maze } from "./algorithms/maze_generation/random_maze"
 
 function App() {
   const [arrGrid, setArrGrid] = useState([])
@@ -15,6 +19,14 @@ function App() {
   const endNode = useRef({ row: -1, col: -1 })
   const userScore = useRef(0)
   const [algoScore, setAlgoScore] = useState(0)
+
+  useEffect(() => console.log("Nidhal Labidi | Junior Software Engineer"), [])
+
+  const generateMaze = () => {
+    let copiedArr = noWallsArr(arrGrid)
+    copiedArr = random_maze(copiedArr, startNode.current, endNode.current)
+    setArrGrid(copiedArr)
+  }
 
   const clearFinalPath = () => {
     for (let i = 0; i < arrGrid.length; i++) {
@@ -83,7 +95,6 @@ function App() {
   }
 
   const visualizeDijkstra = () => {
-    //Fix Dijkstra because it's not working on the copied array
     let copiedArr = arrayInitialCopy(arrGrid)
     let visitedNodesInOrder = dijkstra(
       copiedArr,
@@ -110,6 +121,7 @@ function App() {
         setAlgoScore={setAlgoScore}
         clearFinalPath={clearFinalPath}
         clearWalls={clearWalls}
+        generateMaze={generateMaze}
       />
       <main className="main">
         <GridNode
@@ -126,8 +138,6 @@ function App() {
 
 function arrayInitialCopy(grid) {
   // It returns the original array(when all node were unvisited.)
-  // We do this since the method since JSON.string(JSON.parse(arr)) has data loss.
-  // It sets distance to null (prev value was infinity)
   let arrCopy = []
   for (let i = 0; i < grid.length; i++) {
     let row = []
@@ -150,6 +160,17 @@ function arrayInitialCopy(grid) {
     arrCopy.push(row)
   }
   return arrCopy
+}
+
+function noWallsArr(grid) {
+  let copiedArr = arrayInitialCopy(grid)
+  // Now we remove all the walls
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      copiedArr[i][j].isWall = false
+    }
+  }
+  return copiedArr
 }
 
 export default App
