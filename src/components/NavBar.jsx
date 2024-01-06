@@ -11,13 +11,15 @@ export function NavBar({
   generateMaze,
   isFast,
   setIsFast,
+  isSoundOn,
+  setIsSoundOn,
 }) {
   const [selectedAlgo, setSelectedAlgo] = useState("dijsktra")
 
   return (
     <header className="header">
       <select
-        className="algos-container"
+        className="select-container"
         value={selectedAlgo}
         onChange={(e) => setSelectedAlgo(e.target.value)}
       >
@@ -58,7 +60,7 @@ export function NavBar({
       </button>
 
       <select
-        className="algos-container"
+        className="select-container"
         value={isFast}
         onChange={() => {
           setIsFast((prevVal) => !prevVal)
@@ -66,6 +68,17 @@ export function NavBar({
       >
         <option value={true}>Fast &#128007;</option>
         <option value={false}>Slow &#128034;</option>
+      </select>
+
+      <select
+        className="select-container"
+        value={isSoundOn}
+        onChange={() => {
+          setIsSoundOn((prevVal) => !prevVal)
+        }}
+      >
+        <option value={true}>Sound On &#128266;</option>
+        <option value={false}>Sound Off &#128263;</option>
       </select>
     </header>
   )

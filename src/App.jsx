@@ -20,10 +20,12 @@ function App() {
   const userScore = useRef(0)
   const [algoScore, setAlgoScore] = useState(0)
   const [isFast, setIsFast] = useState(true)
+  const [isSoundOn, setIsSoundOn] = useState(true)
 
   useEffect(() => console.log("Nidhal Labidi | Junior Software Engineer"), [])
 
   const generateMaze = () => {
+    clearFinalPath()
     let copiedArr = noWallsArr(arrGrid)
     copiedArr = random_maze(copiedArr, startNode.current, endNode.current)
     setArrGrid(copiedArr)
@@ -71,7 +73,7 @@ function App() {
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
     console.log("Shortest path->", shortestPathNodes)
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -83,7 +85,7 @@ function App() {
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
     console.log("Shortest path->", shortestPathNodes)
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -91,7 +93,12 @@ function App() {
     let copiedArr = arrayInitialCopy(arrGrid)
     let visitedNodesInOrder = dfs(copiedArr, startNode.current)
     console.log("All visited Nodes->", visitedNodesInOrder)
-    animateAlgorithm(visitedNodesInOrder, visitedNodesInOrder, isFast)
+    animateAlgorithm(
+      visitedNodesInOrder,
+      visitedNodesInOrder,
+      isFast,
+      isSoundOn
+    )
     setAlgoScore(visitedNodesInOrder.length)
   }
 
@@ -108,7 +115,7 @@ function App() {
     )
     console.log("Shortest path->", shortestPathNodes)
 
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -125,6 +132,8 @@ function App() {
         generateMaze={generateMaze}
         isFast={isFast}
         setIsFast={setIsFast}
+        isSoundOn={isSoundOn}
+        setIsSoundOn={setIsSoundOn}
       />
       <main className="main">
         <GridNode

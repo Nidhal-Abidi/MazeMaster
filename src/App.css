@@ -50,7 +50,7 @@
 }
 
 .btn,
-.algos-container {
+.select-container {
   background-color: var(--nav-btn-clr);
   border: 1px solid var(--nav-btn-border-clr);
   color: white;
