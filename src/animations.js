@@ -1,10 +1,15 @@
-export const animateAlgorithm = (visitedNodesInOrder, shortestPathNodes) => {
+export const animateAlgorithm = (
+  visitedNodesInOrder,
+  shortestPathNodes,
+  isFast
+) => {
+  let speed = isFast ? 50 : 300
   for (let i = 0; i <= visitedNodesInOrder.length; i++) {
     //Animate the shortest path at the end
     if (i == visitedNodesInOrder.length) {
       setTimeout(() => {
         animateShortestPath(shortestPathNodes)
-      }, 50 * i)
+      }, speed * i)
     } else {
       // Animate the visited nodes first.
       let node = visitedNodesInOrder[i]
@@ -16,7 +21,7 @@ export const animateAlgorithm = (visitedNodesInOrder, shortestPathNodes) => {
         setTimeout(() => {
           cell.classList.remove("visited-node-animation")
         }, 1000)
-      }, 50 * i)
+      }, speed * i)
     }
   }
 }

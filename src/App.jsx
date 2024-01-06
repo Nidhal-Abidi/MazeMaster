@@ -19,6 +19,7 @@ function App() {
   const endNode = useRef({ row: -1, col: -1 })
   const userScore = useRef(0)
   const [algoScore, setAlgoScore] = useState(0)
+  const [isFast, setIsFast] = useState(true)
 
   useEffect(() => console.log("Nidhal Labidi | Junior Software Engineer"), [])
 
@@ -70,7 +71,7 @@ function App() {
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
     console.log("Shortest path->", shortestPathNodes)
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -82,7 +83,7 @@ function App() {
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
     console.log("Shortest path->", shortestPathNodes)
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -90,7 +91,7 @@ function App() {
     let copiedArr = arrayInitialCopy(arrGrid)
     let visitedNodesInOrder = dfs(copiedArr, startNode.current)
     console.log("All visited Nodes->", visitedNodesInOrder)
-    animateAlgorithm(visitedNodesInOrder, visitedNodesInOrder)
+    animateAlgorithm(visitedNodesInOrder, visitedNodesInOrder, isFast)
     setAlgoScore(visitedNodesInOrder.length)
   }
 
@@ -107,7 +108,7 @@ function App() {
     )
     console.log("Shortest path->", shortestPathNodes)
 
-    animateAlgorithm(visitedNodesInOrder, shortestPathNodes)
+    animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast)
     setAlgoScore(shortestPathNodes.length)
   }
 
@@ -122,6 +123,8 @@ function App() {
         clearFinalPath={clearFinalPath}
         clearWalls={clearWalls}
         generateMaze={generateMaze}
+        isFast={isFast}
+        setIsFast={setIsFast}
       />
       <main className="main">
         <GridNode

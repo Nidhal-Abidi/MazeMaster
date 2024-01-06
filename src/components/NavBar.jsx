@@ -9,6 +9,8 @@ export function NavBar({
   clearFinalPath,
   clearWalls,
   generateMaze,
+  isFast,
+  setIsFast,
 }) {
   const [selectedAlgo, setSelectedAlgo] = useState("dijsktra")
 
@@ -54,6 +56,17 @@ export function NavBar({
       <button className="btn" onClick={clearWalls}>
         Clear Walls
       </button>
+
+      <select
+        className="algos-container"
+        value={isFast}
+        onChange={() => {
+          setIsFast((prevVal) => !prevVal)
+        }}
+      >
+        <option value={true}>Fast &#128007;</option>
+        <option value={false}>Slow &#128034;</option>
+      </select>
     </header>
   )
 }

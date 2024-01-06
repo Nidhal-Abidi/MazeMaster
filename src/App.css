@@ -268,6 +268,8 @@
 
 .wall-node {
   background-color: var(--wall-cell-clr);
+  animation: adding-walls-animation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
 }
 
 @keyframes adding-walls-animation {
@@ -275,26 +277,26 @@
   100% {
     transform: rotate(0deg);
     transform-origin: 50% 50%;
-    background-color: var(--final-path-cell-clr);
+    background-color: var(--wall-cell-clr);
   }
 
   10% {
     transform: rotate(8deg);
-    background-color: hsl(47, 100%, 77%);
+    background-color: hsl(0, 0%, 30%);
   }
 
   20%,
   40%,
   60% {
     transform: rotate(-10deg);
-    background-color: hsl(47, 100%, 77%);
+    background-color: hsl(0, 0%, 30%);
   }
 
   30%,
   50%,
   70% {
     transform: rotate(10deg);
-    background-color: hsl(47, 100%, 77%);
+    background-color: hsl(0, 0%, 30%);
   }
 
   80% {

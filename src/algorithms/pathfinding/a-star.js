@@ -11,7 +11,7 @@ export function a_star(grid, startNode, endNode) {
   let visitedNodesInOrder = []
 
   while (openSet.length > 0) {
-    console.log(openSet)
+    //console.log(openSet)
     // Search for the next node to explore (i.e. the one wit the lowest value of 'f')
     let lowestFscoreNodeIdx = getLowestFScoreNodeIdx(openSet)
     let currentNode = openSet[lowestFscoreNodeIdx]
@@ -34,6 +34,11 @@ export function a_star(grid, startNode, endNode) {
       if (!closedSet.includes(neighbor)) {
         let possibleG = currentNode.distance + 1
 
+        neighbor.distance = possibleG
+        neighbor.h = manhattanDistance(neighbor, endNode)
+        neighbor.f = neighbor.distance + neighbor.h
+        neighbor.previousNode = currentNode
+
         if (!openSet.includes(neighbor)) {
           openSet.push(neighbor)
         } else if (possibleG >= neighbor.distance) {
@@ -41,10 +46,10 @@ export function a_star(grid, startNode, endNode) {
           continue
         }
 
-        neighbor.distance = possibleG
-        neighbor.h = manhattanDistance(neighbor, endNode)
+        /* neighbor.distance = possibleG
+        neighbor.h = squareDistance(neighbor, endNode)
         neighbor.f = neighbor.distance + neighbor.h
-        neighbor.previousNode = currentNode
+        neighbor.previousNode = currentNode */
       }
     }
   }
@@ -68,23 +73,23 @@ function manhattanDistance(nodeA, nodeB) {
 
   let prevCost =
     Math.abs(nodeA.col - nodeB.col) + Math.abs(nodeA.row - nodeB.row)
-  /* let nudge = 0
+  let nudge = 0
   if ((nodeA.row + nodeA.col) % 2 == 0 && nodeB.row != nodeA.row) {
     nudge = 1
   }
   if ((nodeA.row + nodeA.col) % 2 == 1 && nodeB.col != nodeA.col) {
     nudge = 1
-  } */
-  return prevCost
+  }
+  return prevCost - 1 + nudge * 0.001
 }
 
 function getNeighbors(grid, node) {
   const neighbors = []
   const { col, row } = node
-  if (row < grid.length - 1) neighbors.push(grid[row + 1][col])
   if (row > 0) neighbors.push(grid[row - 1][col])
-  if (col > 0) neighbors.push(grid[row][col - 1])
   if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1])
+  if (row < grid.length - 1) neighbors.push(grid[row + 1][col])
+  if (col > 0) neighbors.push(grid[row][col - 1])
 
   return neighbors
 }
