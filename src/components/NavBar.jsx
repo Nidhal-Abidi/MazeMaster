@@ -24,15 +24,16 @@ export function NavBar({
         onChange={(e) => setSelectedAlgo(e.target.value)}
       >
         <option value="dijsktra">Dijkstra</option>
-        <option value="dfs">Depth-First Search</option>
-        <option value="bfs">Breadth-First Search</option>
         <option value="a-star">A*</option>
+        <option value="bfs">Breadth-First Search</option>
+        <option value="dfs">Depth-First Search</option>
       </select>
 
       <button
         className="btn btn-accent"
         onClick={() => {
           setAlgoScore(0)
+          // setArrGrid(arrWithoutUserPathNodes)
           if (selectedAlgo == "dijsktra") {
             visualizeDijkstra()
           } else if (selectedAlgo == "dfs") {

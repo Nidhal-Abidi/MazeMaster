@@ -2,10 +2,19 @@ import { useEffect, useRef, useState } from "react"
 import { Node } from "./Node"
 import { GridSizeSwitch } from "./GridSizeSwitch"
 
-export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
+export function GridNode({
+  arrGrid,
+  setArrGrid,
+  startNode,
+  endNode,
+  userPathArr,
+  setUserPathArr,
+}) {
   const [cellSide, setCellSide] = useState(60)
   const [gridDim, setGridDim] = useState([500, 500])
   const cellsContainerRef = useRef()
+
+  const [isUKeyPressed, setIsUKeyPressed] = useState(false)
 
   useEffect(() => {
     const createGrid = (rows, columns) => {
@@ -57,6 +66,7 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
       isStartNode: row == randStartNode.row && col == randStartNode.col,
       isEndNode: row == randEndNode.row && col == randEndNode.col,
       isWall: false,
+      isUserNode: false,
       distance:
         row == randStartNode.row && col == randStartNode.col ? 0 : Infinity,
       isVisited: false,
@@ -64,13 +74,34 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
     }
   }
 
-  function getRandomInt(min, max) {
+  /* function getRandomInt(min, max) {
     //Should return an integer between [0,max-1]
     return Math.floor(Math.random() * (max - min) + min)
+  } */
+  function handleKeyDown(event) {
+    if (event.code == "KeyU") {
+      //console.log("key up")
+      setIsUKeyPressed(true)
+    }
+  }
+
+  function handleKeyUp(event) {
+    if (event.code == "KeyU") {
+      //console.log("key down")
+      setIsUKeyPressed(false)
+    }
   }
 
   return (
-    <div className="grid-node">
+    <div
+      className="grid-node"
+      onKeyDown={(e) => {
+        handleKeyDown(e)
+      }}
+      onKeyUp={(e) => {
+        handleKeyUp(e)
+      }}
+    >
       <p style={{ color: "white" }}>Grid Size</p>
       <GridSizeSwitch cellSide={cellSide} setCellSide={setCellSide} />
       <div
@@ -91,6 +122,9 @@ export function GridNode({ arrGrid, setArrGrid, startNode, endNode }) {
                 node={cell}
                 arrGrid={arrGrid}
                 setArrGrid={setArrGrid}
+                userPathArr={userPathArr}
+                setUserPathArr={setUserPathArr}
+                isUKeyPressed={isUKeyPressed}
               />
             )
           })

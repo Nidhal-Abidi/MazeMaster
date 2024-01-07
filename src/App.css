@@ -24,6 +24,7 @@
   --wall-cell-clr: hsl(0, 0%, 21%);
   --starting-cell-clr: hsl(161, 82%, 24%);
   --ending-cell-clr: hsl(355, 100%, 38%);
+  --user-node-clr: hsl(30, 100%, 29%);
 
   /* Cell width*/
   --cell-width-large: 90px;
@@ -82,7 +83,7 @@
 
 .btn-small {
   font-size: 1rem;
-  margin-left: 2rem;
+  margin-left: 0.5rem;
 }
 
 .btn-accent:hover,
@@ -308,6 +309,21 @@
   }
 }
 
+.user-node {
+  background-color: var(--user-node-clr);
+  animation: user-node-animation 0.3s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes user-node-animation {
+  0% {
+    transform: scale(0.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .node-small {
   height: var(--cell-width-small);
   width: var(--cell-width-small);
@@ -320,7 +336,8 @@
 
 .side-bar {
   border-left: 1px solid var(--nav-clr);
-  max-width: 15rem;
+  overflow-y: auto;
+  max-width: 14rem;
 }
 
 /*Cell Size toggle css (src before modification: https://www.w3schools.com/howto/howto_css_switch.asp)*/
@@ -394,14 +411,16 @@ input:checked + .slider:before {
 .side-bar .header {
   color: white;
   background-color: var(--body-clr);
-  padding: 1em 1em 1em 0;
+  padding: 0em 0.5em 0.5em 0;
 }
 
 .side-bar .instruction-item {
   color: hsl(40, 12%, 81%);
   font-size: 1.1rem;
   font-weight: bold;
-  line-height: 2rem;
+  line-height: 1.5rem;
+  padding-top: 0.2em;
+  padding-right: 0.2em;
 }
 
 .path-score {
@@ -425,4 +444,42 @@ input:checked + .slider:before {
   text-align: center;
   font-weight: bold;
   font-style: italic;
+}
+
+/*User path messages SRC(https://codepen.io/palimadra/pen/OVvbaY)*/
+.user-path-info,
+.user-path-success,
+.user-path-error {
+  border: 1px solid;
+  margin: 10px 0px;
+  padding: 15px 10px 15px 50px;
+  background-repeat: no-repeat;
+  background-position: 10px center;
+}
+.user-path-info {
+  color: #00529b;
+  background-color: #bde5f8;
+  background-image: url("https://i.imgur.com/ilgqWuX.png");
+}
+.user-path-success {
+  color: #4f8a10;
+  background-color: #dff2bf;
+  background-image: url("https://i.imgur.com/Q9BGTuy.png");
+}
+.user-path-error {
+  color: #d8000c;
+  background-color: #ffbaba;
+  background-image: url("https://i.imgur.com/GnyDvKN.png");
+}
+
+.user-path-btns-container {
+  display: flex;
+}
+
+.hover {
+  position: absolute;
+  bottom: 20px;
+}
+.hide {
+  display: none;
 }

@@ -15,9 +15,10 @@ import { random_maze } from "./algorithms/maze_generation/random_maze"
 
 function App() {
   const [arrGrid, setArrGrid] = useState([])
+  const [userPathArr, setUserPathArr] = useState([])
   const startNode = useRef({ row: -1, col: -1 })
   const endNode = useRef({ row: -1, col: -1 })
-  const userScore = useRef(0)
+  const [userScore, setUserScore] = useState(0)
   const [algoScore, setAlgoScore] = useState(0)
   const [isFast, setIsFast] = useState(true)
   const [isSoundOn, setIsSoundOn] = useState(true)
@@ -27,6 +28,10 @@ function App() {
   const generateMaze = () => {
     clearFinalPath()
     let copiedArr = noWallsArr(arrGrid)
+    //Remove the user's path
+    setUserScore(0)
+    setUserPathArr([])
+    copiedArr = noUserPathArr(copiedArr)
     copiedArr = random_maze(copiedArr, startNode.current, endNode.current)
     setArrGrid(copiedArr)
   }
@@ -36,7 +41,6 @@ function App() {
       for (let j = 0; j < arrGrid[0].length; j++) {
         let node = arrGrid[i][j]
         let cell = document.querySelector(`#node-${node.row}-${node.col}`)
-        //console.log(cell.classList.contains("visited-node"))
 
         if (cell.classList.contains("visited-node")) {
           cell.classList.remove("visited-node")
@@ -68,11 +72,11 @@ function App() {
       startNode.current,
       endNode.current
     )
-    console.log("All visited Nodes->", visitedNodesInOrder)
+    //console.log("All visited Nodes->", visitedNodesInOrder)
     let shortestPathNodes = getNodesInShortestPathOrder(
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
-    console.log("Shortest path->", shortestPathNodes)
+    //console.log("Shortest path->", shortestPathNodes)
     animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
   }
@@ -80,11 +84,11 @@ function App() {
   const visualizeBFS = () => {
     let copiedArr = arrayInitialCopy(arrGrid)
     let visitedNodesInOrder = bfs(copiedArr, startNode.current)
-    console.log("All visited Nodes->", visitedNodesInOrder)
+    //console.log("All visited Nodes->", visitedNodesInOrder)
     let shortestPathNodes = getNodesInShortestPathOrder(
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
-    console.log("Shortest path->", shortestPathNodes)
+    //console.log("Shortest path->", shortestPathNodes)
     animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
   }
@@ -92,7 +96,7 @@ function App() {
   const visualizeDFS = () => {
     let copiedArr = arrayInitialCopy(arrGrid)
     let visitedNodesInOrder = dfs(copiedArr, startNode.current)
-    console.log("All visited Nodes->", visitedNodesInOrder)
+    //console.log("All visited Nodes->", visitedNodesInOrder)
     animateAlgorithm(
       visitedNodesInOrder,
       visitedNodesInOrder,
@@ -109,11 +113,11 @@ function App() {
       startNode.current,
       endNode.current
     )
-    console.log("All visited Nodes->", visitedNodesInOrder)
+    //console.log("All visited Nodes->", visitedNodesInOrder)
     let shortestPathNodes = getNodesInShortestPathOrder(
       visitedNodesInOrder[visitedNodesInOrder.length - 1]
     )
-    console.log("Shortest path->", shortestPathNodes)
+    //console.log("Shortest path->", shortestPathNodes)
 
     animateAlgorithm(visitedNodesInOrder, shortestPathNodes, isFast, isSoundOn)
     setAlgoScore(shortestPathNodes.length)
@@ -139,10 +143,21 @@ function App() {
         <GridNode
           arrGrid={arrGrid}
           setArrGrid={setArrGrid}
+          userPathArr={userPathArr}
+          setUserPathArr={setUserPathArr}
           startNode={startNode}
           endNode={endNode}
         />
-        <SideBar algoScore={algoScore} />
+        <SideBar
+          algoScore={algoScore}
+          userPathArr={userPathArr}
+          setUserPathArr={setUserPathArr}
+          userScore={userScore}
+          setUserScore={setUserScore}
+          arrGrid={arrGrid}
+          setArrGrid={setArrGrid}
+          startNode={startNode.current}
+        />
       </main>
     </>
   )
@@ -159,6 +174,7 @@ function arrayInitialCopy(grid) {
         col: grid[i][j].col,
         distance: Infinity,
         isWall: grid[i][j].isWall,
+        isUserNode: grid[i][j].isUserNode,
         isVisited: false,
         isStartNode: grid[i][j].isStartNode,
         isEndNode: grid[i][j].isEndNode,
@@ -180,6 +196,17 @@ function noWallsArr(grid) {
   for (let i = 0; i < grid.length; i++) {
     for (let j = 0; j < grid[0].length; j++) {
       copiedArr[i][j].isWall = false
+    }
+  }
+  return copiedArr
+}
+
+function noUserPathArr(grid) {
+  let copiedArr = arrayInitialCopy(grid)
+  // Now we remove all the walls
+  for (let i = 0; i < grid.length; i++) {
+    for (let j = 0; j < grid[0].length; j++) {
+      copiedArr[i][j].isUserNode = false
     }
   }
   return copiedArr

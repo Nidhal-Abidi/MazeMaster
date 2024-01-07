@@ -22,7 +22,7 @@ export function a_star(grid, startNode, endNode) {
       return visitedNodesInOrder
     }
     //Remove this node from the openSet
-    openSet.splice(currentNode, 1)
+    openSet = removeNode(openSet, currentNode)
     //Add the node to the closedSet
     closedSet.push(currentNode)
 
@@ -69,7 +69,7 @@ function getLowestFScoreNodeIdx(openSet) {
 }
 
 function manhattanDistance(nodeA, nodeB) {
-  //src: https://www.redblobgames.com/pathfinding/a-star/implementation.html#ties-checkerboard-costs
+  //Trick src: https://www.redblobgames.com/pathfinding/a-star/implementation.html#ties-checkerboard-costs
 
   let prevCost =
     Math.abs(nodeA.col - nodeB.col) + Math.abs(nodeA.row - nodeB.row)
@@ -80,7 +80,7 @@ function manhattanDistance(nodeA, nodeB) {
   if ((nodeA.row + nodeA.col) % 2 == 1 && nodeB.col != nodeA.col) {
     nudge = 1
   }
-  return prevCost - 1 + nudge * 0.001
+  return prevCost - 1 + nudge * 0.01
 }
 
 function getNeighbors(grid, node) {
@@ -92,4 +92,15 @@ function getNeighbors(grid, node) {
   if (col > 0) neighbors.push(grid[row][col - 1])
 
   return neighbors
+}
+
+function removeNode(arr, node) {
+  // node should be inside of the arr.
+  return arr.filter((currNode) => {
+    if (currNode.row === node.row && currNode.col === node.col) {
+      return false
+    } else {
+      return true
+    }
+  })
 }
