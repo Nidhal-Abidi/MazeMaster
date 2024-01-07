@@ -32,6 +32,7 @@ The pathfinding algorithms:
 - Depth-First Search [[4]](#references)
 
 ![Alt text](mazes.png)
+<br/>  
 _Figure 1. Sample mazes._
 
 The references have clear explanation about how the algorithms work, I won't go into details.
@@ -46,7 +47,7 @@ The folder structure can be seen below.
 ├── src
 │   ├── algorithms
 │   │		├──	maze_generation
-│   │   │ 	    ├──random_maze.js
+│   │   │ ├──random_maze.js
 │   │   ├──	pathfinding
 │   │   │	├──	a-star.js
 │   │   │	├──	bfs.js
