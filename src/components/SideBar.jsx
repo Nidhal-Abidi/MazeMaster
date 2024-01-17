@@ -141,7 +141,8 @@ export function SideBar({
     setMsg(msg)
 
     if (isValidPath) {
-      setUserScore(userPathArr.length)
+      // 2 is added because we count the start & end node as part of the final path
+      setUserScore(userPathArr.length + 2)
     }
   }
 
