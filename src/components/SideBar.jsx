@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { arrayDeepCopy, checkPathValidity } from "../utils/userPathUtils"
+import { arrayDeepCopyOneDim, checkPathValidity } from "../utils/userPathUtils"
 
 export function SideBar({
   algoScore,
@@ -36,7 +36,7 @@ export function SideBar({
   }
 
   function handleUserPathScore(userPathArr, arrGrid, startNode) {
-    let copiedArr = arrayDeepCopy(userPathArr)
+    let copiedArr = arrayDeepCopyOneDim(userPathArr)
     let [isValidPath, msg] = checkPathValidity(copiedArr, arrGrid, startNode)
 
     setIsValidPath(isValidPath)

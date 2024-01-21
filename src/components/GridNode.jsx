@@ -1,15 +1,11 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useContext } from "react"
 import { Node } from "./Node"
 import { GridSizeSwitch } from "./GridSizeSwitch"
+import { GridNodeContext } from "../App"
 
-export function GridNode({
-  arrGrid,
-  setArrGrid,
-  startNode,
-  endNode,
-  userPathArr,
-  setUserPathArr,
-}) {
+export function GridNode() {
+  const { arrGrid, setArrGrid, startNode, endNode } =
+    useContext(GridNodeContext)
   const [cellSide, setCellSide] = useState(60)
   const [gridDim, setGridDim] = useState([500, 500])
   const cellsContainerRef = useRef()
@@ -80,14 +76,12 @@ export function GridNode({
   } */
   function handleKeyDown(event) {
     if (event.code == "KeyU") {
-      //console.log("key up")
       setIsUKeyPressed(true)
     }
   }
 
   function handleKeyUp(event) {
     if (event.code == "KeyU") {
-      //console.log("key down")
       setIsUKeyPressed(false)
     }
   }
@@ -120,10 +114,6 @@ export function GridNode({
                 key={colIdx}
                 nodeSize={nodeSize}
                 node={cell}
-                arrGrid={arrGrid}
-                setArrGrid={setArrGrid}
-                userPathArr={userPathArr}
-                setUserPathArr={setUserPathArr}
                 isUKeyPressed={isUKeyPressed}
               />
             )

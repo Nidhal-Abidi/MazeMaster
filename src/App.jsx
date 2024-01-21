@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { createContext, useEffect, useRef, useState } from "react"
 import "./App.css"
 import { GridNode } from "./components/GridNode"
 import { NavBar } from "./components/NavBar"
@@ -12,6 +12,8 @@ import { bfs } from "./algorithms/pathfinding/bfs"
 import { animateAlgorithm } from "./animations"
 import { a_star } from "./algorithms/pathfinding/a-star"
 import { random_maze } from "./algorithms/maze_generation/random_maze"
+
+export const GridNodeContext = createContext()
 
 function App() {
   const [arrGrid, setArrGrid] = useState([])
@@ -140,14 +142,18 @@ function App() {
         setIsSoundOn={setIsSoundOn}
       />
       <main className="main">
-        <GridNode
-          arrGrid={arrGrid}
-          setArrGrid={setArrGrid}
-          userPathArr={userPathArr}
-          setUserPathArr={setUserPathArr}
-          startNode={startNode}
-          endNode={endNode}
-        />
+        <GridNodeContext.Provider
+          value={{
+            arrGrid,
+            setArrGrid,
+            userPathArr,
+            setUserPathArr,
+            startNode,
+            endNode,
+          }}
+        >
+          <GridNode />
+        </GridNodeContext.Provider>
         <SideBar
           algoScore={algoScore}
           userPathArr={userPathArr}

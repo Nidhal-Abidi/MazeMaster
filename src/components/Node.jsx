@@ -1,12 +1,8 @@
-export function Node({
-  nodeSize,
-  node,
-  arrGrid,
-  setArrGrid,
-  isUKeyPressed,
-  userPathArr,
-  setUserPathArr,
-}) {
+import { GridNodeContext } from "../App"
+import { useContext } from "react"
+
+export function Node({ nodeSize, node, isUKeyPressed }) {
+  const { arrGrid, setArrGrid, setUserPathArr } = useContext(GridNodeContext)
   const { row, col, isStartNode, isEndNode, isWall, isUserNode } = node
 
   let nodeType = isStartNode
@@ -29,7 +25,7 @@ export function Node({
 
   function getUpdatedGridAfterTogglingWall(grid, row, col) {
     // performs a deep copy on arrGrid.
-    let arrGridCopy = arrayDeepCopy(grid)
+    let arrGridCopy = arrayDeepCopyTwoDim(grid)
     let node = arrGridCopy[row][col]
     node.isWall = !node.isWall
     arrGridCopy[row][col] = node
@@ -66,14 +62,14 @@ export function Node({
 
   function getUpdatedGridAfterTogglingUserNode(grid, row, col) {
     // performs a deep copy on arrGrid.
-    let arrGridCopy = arrayDeepCopy(grid)
+    let arrGridCopy = arrayDeepCopyTwoDim(grid)
     let node = arrGridCopy[row][col]
     node.isUserNode = !node.isUserNode
     arrGridCopy[row][col] = node
     return arrGridCopy
   }
 
-  function arrayDeepCopy(grid) {
+  function arrayDeepCopyTwoDim(grid) {
     // We do this since the method since JSON.string(JSON.parse(arr)) has data loss.
     // It sets distance to null (prev value was infinity)
     let arrCopy = JSON.parse(JSON.stringify(grid))

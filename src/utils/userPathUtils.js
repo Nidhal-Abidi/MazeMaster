@@ -1,4 +1,4 @@
-export function arrayDeepCopy(grid) {
+export function arrayDeepCopyOneDim(grid) {
   // We do this since the method since JSON.string(JSON.parse(arr)) has data loss.
   // It sets distance to null (prev value was infinity)
   let arrCopy = JSON.parse(JSON.stringify(grid))

@@ -1,7 +1,5 @@
 let audioCtx = null
 
-const waveFormType = "sine"
-
 export const animateAlgorithm = (
   visitedNodesInOrder,
   shortestPathNodes,
