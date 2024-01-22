@@ -10,6 +10,7 @@ export function SideBar({
   setArrGrid,
   setUserPathArr,
   startNode,
+  isUKeyPressed,
 }) {
   const [isValidPath, setIsValidPath] = useState(false)
   const [msg, setMsg] = useState("")
@@ -81,7 +82,11 @@ export function SideBar({
       <br />
       <h1 className="header">User VS Algo:</h1>
       <div className="user-path-info">
-        Hold key {"`U`"} and click on the cells to build your path
+        Click ONCE on {"`U`"} and drag the mouse to build your path. <br />{" "}
+        <br />
+        <span>
+          {"`U`"} is {isUKeyPressed ? "pressed" : "not pressed"}
+        </span>
       </div>
 
       <div className="path-score">

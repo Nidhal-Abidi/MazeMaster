@@ -24,7 +24,7 @@
   --wall-cell-clr: hsl(0, 0%, 21%);
   --starting-cell-clr: hsl(161, 82%, 24%);
   --ending-cell-clr: hsl(355, 100%, 38%);
-  --user-node-clr: hsl(30, 100%, 29%);
+  --user-node-clr: hsl(30, 100%, 34%);
 
   /* Cell width*/
   --cell-width-large: 90px;
@@ -316,12 +316,45 @@
 }
 
 @keyframes user-node-animation {
-  0% {
+  0%,
+  100% {
+    transform: rotate(0deg);
+    transform-origin: 50% 50%;
+    background-color: var(--user-node-clr);
+  }
+
+  10% {
+    transform: rotate(8deg);
+    background-color: hsl(30, 100%, 39%);
+  }
+
+  20%,
+  40%,
+  60% {
+    transform: rotate(-10deg);
+    background-color: hsl(30, 100%, 39%);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: rotate(10deg);
+    background-color: hsl(30, 100%, 39%);
+  }
+
+  80% {
+    transform: rotate(-8deg);
+  }
+
+  90% {
+    transform: rotate(8deg);
+  }
+  /* 0% {
     transform: scale(0.5);
   }
   100% {
     transform: scale(1);
-  }
+  } */
 }
 
 .node-small {
@@ -461,6 +494,12 @@ input:checked + .slider:before {
   background-color: #bde5f8;
   background-image: url("https://i.imgur.com/ilgqWuX.png");
 }
+.user-path-info span {
+  font-style: italic;
+  padding-right: 0.2em;
+  background-color: #5db1fa;
+}
+
 .user-path-success {
   color: #4f8a10;
   background-color: #dff2bf;

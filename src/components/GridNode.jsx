@@ -4,13 +4,19 @@ import { GridSizeSwitch } from "./GridSizeSwitch"
 import { GridNodeContext } from "../App"
 
 export function GridNode() {
-  const { arrGrid, setArrGrid, startNode, endNode } =
-    useContext(GridNodeContext)
+  const {
+    arrGrid,
+    setArrGrid,
+    startNode,
+    endNode,
+    isUKeyPressed,
+    setIsUKeyPressed,
+  } = useContext(GridNodeContext)
   const [cellSide, setCellSide] = useState(60)
   const [gridDim, setGridDim] = useState([500, 500])
   const cellsContainerRef = useRef()
 
-  const [isUKeyPressed, setIsUKeyPressed] = useState(false)
+  const [isMousePressed, setIsMousePressed] = useState(false)
 
   useEffect(() => {
     const createGrid = (rows, columns) => {
@@ -74,24 +80,17 @@ export function GridNode() {
     //Should return an integer between [0,max-1]
     return Math.floor(Math.random() * (max - min) + min)
   } */
-  function handleKeyDown(event) {
-    if (event.code == "KeyU") {
-      setIsUKeyPressed(true)
-    }
-  }
 
   function handleKeyUp(event) {
     if (event.code == "KeyU") {
-      setIsUKeyPressed(false)
+      setIsUKeyPressed((isUKeyPressed) => !isUKeyPressed)
     }
   }
 
   return (
     <div
       className="grid-node"
-      onKeyDown={(e) => {
-        handleKeyDown(e)
-      }}
+      tabIndex={-1}
       onKeyUp={(e) => {
         handleKeyUp(e)
       }}
@@ -115,6 +114,8 @@ export function GridNode() {
                 nodeSize={nodeSize}
                 node={cell}
                 isUKeyPressed={isUKeyPressed}
+                setIsMousePressed={setIsMousePressed}
+                isMousePressed={isMousePressed}
               />
             )
           })

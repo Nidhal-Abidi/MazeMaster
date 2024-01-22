@@ -24,6 +24,7 @@ function App() {
   const [algoScore, setAlgoScore] = useState(0)
   const [isFast, setIsFast] = useState(true)
   const [isSoundOn, setIsSoundOn] = useState(true)
+  const [isUKeyPressed, setIsUKeyPressed] = useState(false)
 
   useEffect(() => console.log("Nidhal Labidi | Junior Software Engineer"), [])
 
@@ -150,6 +151,8 @@ function App() {
             setUserPathArr,
             startNode,
             endNode,
+            isUKeyPressed,
+            setIsUKeyPressed,
           }}
         >
           <GridNode />
@@ -163,6 +166,7 @@ function App() {
           arrGrid={arrGrid}
           setArrGrid={setArrGrid}
           startNode={startNode.current}
+          isUKeyPressed={isUKeyPressed}
         />
       </main>
     </>

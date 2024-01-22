@@ -1,7 +1,13 @@
 import { GridNodeContext } from "../App"
 import { useContext } from "react"
 
-export function Node({ nodeSize, node, isUKeyPressed }) {
+export function Node({
+  nodeSize,
+  node,
+  isUKeyPressed,
+  setIsMousePressed,
+  isMousePressed,
+}) {
   const { arrGrid, setArrGrid, setUserPathArr } = useContext(GridNodeContext)
   const { row, col, isStartNode, isEndNode, isWall, isUserNode } = node
 
@@ -15,14 +21,23 @@ export function Node({ nodeSize, node, isUKeyPressed }) {
     ? "user-node"
     : ""
 
-  function buildWallNodes(grid, row, col) {
+  /* Used to create the walls while dragging the mouse */
+  function handleMouseDownWalls(grid, row, col) {
     let node = grid[row][col]
-    if (!node.isUserNode) {
+    if (!(node.isUserNode || node.isStartNode || node.isEndNode)) {
+      let updatedGrid = getUpdatedGridAfterTogglingWall(grid, row, col)
+      setArrGrid(updatedGrid)
+      setIsMousePressed(true)
+    }
+  }
+  function handleMouseEnterWalls(grid, row, col) {
+    if (!isMousePressed || isUKeyPressed) return
+    let node = grid[row][col]
+    if (!(node.isUserNode || node.isStartNode || node.isEndNode)) {
       let updatedGrid = getUpdatedGridAfterTogglingWall(grid, row, col)
       setArrGrid(updatedGrid)
     }
   }
-
   function getUpdatedGridAfterTogglingWall(grid, row, col) {
     // performs a deep copy on arrGrid.
     let arrGridCopy = arrayDeepCopyTwoDim(grid)
@@ -32,16 +47,35 @@ export function Node({ nodeSize, node, isUKeyPressed }) {
     return arrGridCopy
   }
 
-  function buildUserPathNodes(grid, row, col) {
+  /* Used to create the userPath while dragging the mouse + after clicking the letter 'u' once*/
+  function handleMouseDownUserPath(grid, row, col) {
     let node = grid[row][col]
     if (!(node.isWall || node.isStartNode || node.isEndNode)) {
       let updatedGrid = getUpdatedGridAfterTogglingUserNode(grid, row, col)
       setArrGrid(updatedGrid)
       updateUserPathArr(updatedGrid[row][col])
+      setIsMousePressed(true)
       //
     }
   }
-
+  function handleMouseEnterUserPath(grid, row, col) {
+    if (!(isMousePressed && isUKeyPressed)) return
+    let node = grid[row][col]
+    if (!(node.isWall || node.isStartNode || node.isEndNode)) {
+      let updatedGrid = getUpdatedGridAfterTogglingUserNode(grid, row, col)
+      updateUserPathArr(updatedGrid[row][col])
+      setArrGrid(updatedGrid)
+      //
+    }
+  }
+  function getUpdatedGridAfterTogglingUserNode(grid, row, col) {
+    // performs a deep copy on arrGrid.
+    let arrGridCopy = arrayDeepCopyTwoDim(grid)
+    let node = arrGridCopy[row][col]
+    node.isUserNode = !node.isUserNode
+    arrGridCopy[row][col] = node
+    return arrGridCopy
+  }
   function updateUserPathArr(node) {
     if (node.isUserNode) {
       // Add the node to the array
@@ -60,15 +94,11 @@ export function Node({ nodeSize, node, isUKeyPressed }) {
     }
   }
 
-  function getUpdatedGridAfterTogglingUserNode(grid, row, col) {
-    // performs a deep copy on arrGrid.
-    let arrGridCopy = arrayDeepCopyTwoDim(grid)
-    let node = arrGridCopy[row][col]
-    node.isUserNode = !node.isUserNode
-    arrGridCopy[row][col] = node
-    return arrGridCopy
+  function handleMouseUp() {
+    setIsMousePressed(false)
   }
 
+  /* Helper fct */
   function arrayDeepCopyTwoDim(grid) {
     // We do this since the method since JSON.string(JSON.parse(arr)) has data loss.
     // It sets distance to null (prev value was infinity)
@@ -86,13 +116,21 @@ export function Node({ nodeSize, node, isUKeyPressed }) {
       className={`node ${nodeSize} ${nodeType}`}
       id={`node-${row}-${col}`}
       tabIndex={-1}
-      onClick={() => {
+      onMouseDown={() => {
         if (isUKeyPressed) {
-          buildUserPathNodes(arrGrid, row, col)
+          handleMouseDownUserPath(arrGrid, row, col)
         } else {
-          buildWallNodes(arrGrid, row, col)
+          handleMouseDownWalls(arrGrid, row, col)
         }
       }}
+      onMouseEnter={() => {
+        if (isUKeyPressed) {
+          handleMouseEnterUserPath(arrGrid, row, col)
+        } else {
+          handleMouseEnterWalls(arrGrid, row, col)
+        }
+      }}
+      onMouseUp={() => handleMouseUp()}
     ></div>
   )
 }
