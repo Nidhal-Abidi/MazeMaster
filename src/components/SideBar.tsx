@@ -1,5 +1,6 @@
-import { useState } from "react"
-import { arrayDeepCopyOneDim, checkPathValidity } from "../utils/userPathUtils"
+import { useState } from "react";
+import { arrayDeepCopyOneDim, checkPathValidity } from "../utils/userPathUtils";
+import { Grid, Node } from "../utils/utilities";
 
 export function SideBar({
   algoScore,
@@ -11,55 +12,73 @@ export function SideBar({
   setUserPathArr,
   startNode,
   isUKeyPressed,
+}: {
+  algoScore: number;
+  userPathArr: Node[];
+  userScore: number;
+  setUserScore: React.Dispatch<React.SetStateAction<number>>;
+  arrGrid: Grid;
+  setArrGrid: React.Dispatch<React.SetStateAction<Grid>>;
+  setUserPathArr: React.Dispatch<React.SetStateAction<Node[]>>;
+  startNode: Node;
+  isUKeyPressed: boolean;
 }) {
-  const [isValidPath, setIsValidPath] = useState(false)
-  const [msg, setMsg] = useState("")
+  const [isValidPath, setIsValidPath] = useState(false);
+  const [msg, setMsg] = useState("");
 
-  let customMsg = null
+  let customMsg = null;
   if (msg !== "") {
     if (isValidPath) {
       customMsg = (
         <div className="user-path-success hover" onClick={toggleCustomMsg}>
           {msg}
         </div>
-      )
+      );
     } else {
       customMsg = (
         <div className="user-path-error hover" onClick={toggleCustomMsg}>
           {msg}
         </div>
-      )
+      );
     }
   }
 
   function toggleCustomMsg() {
-    setMsg("")
+    setMsg("");
   }
 
-  function handleUserPathScore(userPathArr, arrGrid, startNode) {
-    let copiedArr = arrayDeepCopyOneDim(userPathArr)
-    let [isValidPath, msg] = checkPathValidity(copiedArr, arrGrid, startNode)
+  function handleUserPathScore(
+    userPathArr: Node[],
+    arrGrid: Grid,
+    startNode: Node
+  ) {
+    let copiedArr = arrayDeepCopyOneDim(userPathArr);
+    let [isValidPath, msg] = checkPathValidity(copiedArr, arrGrid, startNode);
 
-    setIsValidPath(isValidPath)
-    setMsg(msg)
+    setIsValidPath(isValidPath);
+    setMsg(msg);
 
     if (isValidPath) {
       // 2 is added because we count the start & end node as part of the final path
-      setUserScore(userPathArr.length + 2)
+      setUserScore(userPathArr.length + 2);
     }
   }
 
-  function clearUserPath(setUserPathArr, setUserScore, setArrGrid) {
-    setUserPathArr([])
-    setUserScore(0)
+  function clearUserPath(
+    setUserPathArr: React.Dispatch<React.SetStateAction<Node[]>>,
+    setUserScore: React.Dispatch<React.SetStateAction<number>>,
+    setArrGrid: React.Dispatch<React.SetStateAction<Grid>>
+  ) {
+    setUserPathArr([]);
+    setUserScore(0);
     setArrGrid((prevGrid) => {
       for (let i = 0; i < prevGrid.length; i++) {
         for (let j = 0; j < prevGrid[0].length; j++) {
-          prevGrid[i][j].isUserNode = false
+          prevGrid[i][j].isUserNode = false;
         }
       }
-      return prevGrid
-    })
+      return prevGrid;
+    });
   }
 
   return (
@@ -111,12 +130,12 @@ export function SideBar({
         <button
           className="btn btn-small"
           onClick={() => {
-            clearUserPath(setUserPathArr, setUserScore, setArrGrid)
+            clearUserPath(setUserPathArr, setUserScore, setArrGrid);
           }}
         >
           Clear user path
         </button>
       </div>
     </div>
-  )
+  );
 }

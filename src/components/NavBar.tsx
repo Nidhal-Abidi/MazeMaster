@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState } from "react";
 
 export function NavBar({
   visualizeDijkstra,
@@ -13,8 +13,21 @@ export function NavBar({
   setIsFast,
   isSoundOn,
   setIsSoundOn,
+}: {
+  visualizeDijkstra: () => void;
+  visualizeDFS: () => void;
+  visualizeBFS: () => void;
+  visualizeA_star: () => void;
+  setAlgoScore: React.Dispatch<React.SetStateAction<number>>;
+  clearFinalPath: () => void;
+  clearWalls: () => void;
+  generateMaze: () => void;
+  isFast: 0 | 1;
+  setIsFast: React.Dispatch<React.SetStateAction<0 | 1>>;
+  isSoundOn: 0 | 1;
+  setIsSoundOn: React.Dispatch<React.SetStateAction<0 | 1>>;
 }) {
-  const [selectedAlgo, setSelectedAlgo] = useState("dijsktra")
+  const [selectedAlgo, setSelectedAlgo] = useState("dijsktra");
 
   return (
     <header className="header">
@@ -32,18 +45,18 @@ export function NavBar({
       <button
         className="btn btn-accent"
         onClick={() => {
-          setAlgoScore(0)
+          setAlgoScore(0);
           // setArrGrid(arrWithoutUserPathNodes)
           if (selectedAlgo == "dijsktra") {
-            visualizeDijkstra()
+            visualizeDijkstra();
           } else if (selectedAlgo == "dfs") {
-            visualizeDFS()
+            visualizeDFS();
           } else if (selectedAlgo == "bfs") {
-            visualizeBFS()
+            visualizeBFS();
           } else if (selectedAlgo == "a-star") {
-            visualizeA_star()
+            visualizeA_star();
           } else {
-            console.log("Algorithm is still in progress")
+            console.log("Algorithm is still in progress");
           }
         }}
       >
@@ -64,23 +77,29 @@ export function NavBar({
         className="select-container"
         value={isFast}
         onChange={() => {
-          setIsFast((prevVal) => !prevVal)
+          setIsFast((prevVal) => {
+            if (prevVal === 0) return 1;
+            else return 0;
+          });
         }}
       >
-        <option value={true}>Fast &#128007;</option>
-        <option value={false}>Slow &#128034;</option>
+        <option value={1}>Fast &#128007;</option>
+        <option value={0}>Slow &#128034;</option>
       </select>
 
       <select
         className="select-container"
         value={isSoundOn}
         onChange={() => {
-          setIsSoundOn((prevVal) => !prevVal)
+          setIsSoundOn((prevVal) => {
+            if (prevVal === 0) return 1;
+            else return 0;
+          });
         }}
       >
-        <option value={true}>Sound On &#128266;</option>
-        <option value={false}>Sound Off &#128263;</option>
+        <option value={1}>Sound On &#128266;</option>
+        <option value={0}>Sound Off &#128263;</option>
       </select>
     </header>
-  )
+  );
 }
